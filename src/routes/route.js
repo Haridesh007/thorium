@@ -1,29 +1,47 @@
 const express = require('express');
 const router = express.Router();
 // const controller = require('../controller/assinement.controller');
-var play = [];
-var nameArray =[];
-
-router.post('/test-me', function (req, res) {
-    play.push(req.body)   // insert data in play array
-    res.send(play)   //send response to client side 
-    
+router.get('/test-me', function(req, res) {
+    res.send('My first ever api!')
 });
-router.post('/test-me2', function (req, res) {
-    if(nameArray.includes(req.body.name)){
-        return res.send('name Already exit')
+
+// 1
+router.get('/movies', function(req,res) {
+    res.send('["Fukrey", "Delhi", "Dabang", "Rockstar", "Suryawanshi"]')
+});
+
+// 2
+router.get('/movies/:movieId', function(req, res) {
+    mov = ["Fukrey", "Delhi", "Dabang", "Rockstar", "Suryawanshi"]
+    let value = req.params.movieId;
+    if(value>mov.length-1) {
+        res.send('"Doesnt exist"')
+    } else {
+        res.send(mov[value])
     }
-    
-    nameArray.push(req.body.name);
+})
 
-    
-    play.push(req.body)   // insert data in play array
-
-    res.send(play)   //send response to client side 
-    
+// 3
+router.get('/moviez', function(req,res) {
+    res.send([ {id: 1,name: 'The Shining'}, {id: 2, name: 'Incendies'},  {id: 3, name: 'Rang de Basanti'}, {id: 4, name: 'Finding Demo'} ])
 });
-// router.get('/test-me2',controller.create()); 
-    
+
+// 4
+router.get('/films/:filmId', function (req,res) {
+    let movi = [ {id: 1,name: 'The Shining'}, {id: 2, name: 'Incendies'},  {id: 3, name: 'Rang de Basanti'}, {id: 4, name: 'Finding Demo'} ]
+    let value = req.params.filmId;
+    let found = false;
+    for(i=0; i<movi.length;i++) {
+        if(movi[i].id==value) {
+            found = true
+            res.send(movi[i])
+            break
+        }
+    }
+    if(found==false) {
+        res.send('No Movie exists with this id') 
+    }
+});
 
 
 
