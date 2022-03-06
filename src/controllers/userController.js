@@ -1,15 +1,12 @@
-const UserModel= require("../models/userModel")
-
-const createUser= async function (req, res) {
-    let data= req.body
-    let savedData= await UserModel.create(data)
-    res.send({msg: savedData})
+const address = require('address')
+const timeStamp = function(req,res){
+    const event1 = new Date();
+    const event2 = new Date();
+    event2.setTime(event1.getTime());
+    console.log(event1);
+    console.log(address.ip())
+    res.send('it is time stamps of day api')
 }
 
-const getUsersData= async function (req, res) {
-    let allUsers= await UserModel.find()
-    res.send({msg: allUsers})
-}
-
-module.exports.createUser= createUser
-module.exports.getUsersData= getUsersData
+module.exports.timeStamp=timeStamp;
+module.exports.address=address;
