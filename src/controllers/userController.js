@@ -41,7 +41,7 @@ const loginUser = async function (req, res) {
 };
 
 const getUserData = async function (req, res) {
-  let token = req.headers["x-Auth-token"];
+  let token = req.headers["x-auth-token"];
   if (!token) token = req.headers["x-auth-token"];
 
   //If no token is present in the request header return error
@@ -66,7 +66,7 @@ const getUserData = async function (req, res) {
   res.send({ status: true, data: userDetails });
 };
 
-const updateUser = async function (req, res) {
+const deletedUser = async function (req, res) {
 // Do the same steps here:
 // Check if the token is present
 // Check if the token present is a valid token
@@ -80,11 +80,11 @@ const updateUser = async function (req, res) {
   }
 
   let userData = req.body;
-  let updatedUser = await userModel.findOneAndUpdate({ _id: userId }, userData);
-  res.send({ status: updatedUser, data: updatedUser });
+  let deletedUser = await userModel.findOneAndDelete({ _id: userId }, userData);
+  res.send({ status: "DeletedUser", data: "deletedUser" });
 };
 
 module.exports.createUser = createUser;
 module.exports.getUserData = getUserData;
-module.exports.updateUser = updateUser;
+module.exports.deletedUser=deletedUser;
 module.exports.loginUser = loginUser;
