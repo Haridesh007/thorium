@@ -1,27 +1,18 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
+const userController = require("../controllers/userController");
+const tokenValidate = require("../middleWare/tokenValidator");
+const UserValidate = require("../middleWare/UserValidator");
+const authorization = require("../middleWare/authorization");
 
-const UserController= require('../controllers/userController')
-const ProductController= require('../controllers/productController')
-const HeaderMiddleware = require('../middleware/headerMiddleware')
-const OrderController = require('../controllers/orderController.js')
+router.post("/createUser", userController.createUser);
 
-router.get("/test-me", function (req, res) {
-    res.send("My first ever api!")
-})
+router.post("/loginUser", userController.loginUser);
 
-router.post("/createUser", HeaderMiddleware.headerValidation, UserController.createUser )
+router.get("/getUserData/:userId",UserValidate.UserValidator,tokenValidate.tokenValidator,authorization.aurThorization,userController.getUserData);
 
-// router.get("/getUsers", UserController.getUsersData)
+router.put("/updateUser/:userId",UserValidate.UserValidator,tokenValidate.tokenValidator,authorization.aurThorization,userController.updateUser);
 
-router.post("/createProduct", ProductController.createProduct  )
-
-// router.get("/getAllProducts", ProductController.getAllProducts)
-
-router.post("/createOrder", HeaderMiddleware.headerValidation, OrderController.createOrder )
-// router.post("/updateBooks", BookController.updateBooks)
-// router.post("/deleteBooks", BookController.deleteBooks)
-
-
+router.delete("/deleteUser/:userId",UserValidate.UserValidator,tokenValidate.tokenValidator,authorization.aurThorization,userController.deleteData);
 
 module.exports = router;
